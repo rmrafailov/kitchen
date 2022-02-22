@@ -25,18 +25,18 @@ obs = env.reset()
         datasets[k] = f.create_dataset(k, (1, env._max_episode_steps, *obs[k].shape), 
                 maxshape=(None, env._max_episode_steps, *obs[k].shape), dtype=obs[k].dtype)
     
-    for j in range(5):
+    for j in range(3):
         
         time.sleep(3)
         obs = env.reset()
         episode = dict()
         
         for k, v in obs.items():
-            episode[k] = np.zeros(shape = [env._max_episode_steps] + list(v.shape), dtype = v.dtype)
+            episode[k] = np.zeros(shape = [env._max_episode_steps + 1] + list(v.shape), dtype = v.dtype)
             episode[k][0] = copy.deepcopy(v)
-        episode['action'] = np.zeros(shape = [env._max_episode_steps, env.env.N_DOF_ROBOT])
-        episode['reward'] = np.zeros(shape = [env._max_episode_steps])
-        episode['done'] = np.zeros(shape = [env._max_episode_steps])
+        episode['action'] = np.zeros(shape = [env._max_episode_steps + 1, env.env.N_DOF_ROBOT])
+        episode['reward'] = np.zeros(shape = [env._max_episode_steps + 1])
+        episode['done'] = np.zeros(shape = [env._max_episode_steps + 1])
         
         d = copy.deepcopy(env.domain)
         episode['domain'] = copy.deepcopy(d)
