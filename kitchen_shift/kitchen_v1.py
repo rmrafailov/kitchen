@@ -651,6 +651,7 @@ class Kitchen_v1(gym.Env):
             
         jarel = (ja - self.robot.last_qpos[: self.robot.n_jnt]) / (self.frame_skip * self.model.opt.timestep)
         jarel = np.clip(jarel, -self.act_amp, self.act_amp)
+        jarel = jarel.astype(np.float32)
         
         self.robot.step(self, jarel, self.frame_skip, mode='velact')
         
